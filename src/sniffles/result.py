@@ -154,6 +154,9 @@ class CombineResultTmpFile(CombineResult):
         if SnifflesConfig.GLOBAL.sort and svcalls:
             svcalls = list(sorted(svcalls, key=lambda call: call.pos))
 
+            if offset > len(svcalls):
+                stop(f'Offset {offset} greater than length of svcalls: {len(svcalls)} for task {self.task_id} to {self.tmpfile_name}')
+                
             while svcalls[offset].pos < self._highest_position_call:
                 log.debug(f'Unsorted call detected: {self._highest_position_call} > {svcalls[0]}')
                 offset += 1
