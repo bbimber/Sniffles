@@ -161,6 +161,10 @@ class CombineResultTmpFile(CombineResult):
                 log.debug(f'Unsorted call detected: {self._highest_position_call} > {svcalls[0]}')
                 offset += 1
 
+                if offset >= len(svcalls):
+                    log.warn(f'Offset of {offset} is greater than svcalls length: {len(svcalls)}')
+                    break
+
             if offset > 0:  # unsorted calls
                 self.unsorted = True
                 with open(self.tmpfile_unsorted, 'a') as f:
